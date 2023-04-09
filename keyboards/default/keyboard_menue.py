@@ -10,7 +10,7 @@ kb_menue = ReplyKeyboardMarkup(
             KeyboardButton(text="100"),
         ],
         [
-            KeyboardButton(text="Подпишись"),
+            KeyboardButton(text="Инлайн меню"),
             KeyboardButton(text="Любой текст"),
             KeyboardButton(text="Лайк"),
         ]
