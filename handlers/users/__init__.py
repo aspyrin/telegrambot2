@@ -4,6 +4,7 @@ from .hello import dp
 from .menu import dp
 from .buttons import dp
 from .test import dp
+from .inline_menu import dp
 from .error import dp  # должен быть всегда последним импортом
 
 __all__ = ['dp']
