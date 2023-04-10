@@ -2,14 +2,25 @@ from aiogram import types
 from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters import Command
 
+from filters import IsPrivate
+from keyboards.default import kb_menue
 from loader import dp
 
 from states import Register
 
 
-@dp.message_handler(Command('register'))  # /register
+@dp.message_handler(IsPrivate(), Command('register'))  # /register
 async def register(message: types.Message):
-    await message.answer('Привет, ты начал регистрацию, \nВведи свое имя')
+    from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
+    name = ReplyKeyboardMarkup(
+        keyboard=[
+            [
+                KeyboardButton(text=f"{message.from_user.first_name}"),
+            ]
+        ],
+        resize_keyboard=True
+    )
+    await message.answer('Привет, ты начал регистрацию, \nВведи свое имя', reply_markup=name)
     await Register.test1.set()  # переводим пользователяв состояние test1
 
 
@@ -30,5 +41,5 @@ async def state2(message: types.Message, state: FSMContext):
     years = data.get('test2')
     await message.answer(f'Регистрация успешно завершена \n'
                          f'Твое имя {name} \n'
-                         f'Тебе {years} лет')
+                         f'Тебе {years} лет', reply_markup=kb_menue)
     await state.finish()  # переводим пользователяв состояние finish
